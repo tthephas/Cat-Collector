@@ -9,3 +9,8 @@ from django.shortcuts import render
 def home(request):
   # Include an .html file extension - unlike when rendering EJS templates
   return render(request, 'home.html')
+
+# about route
+def about(request):
+  # Include an .html file extension - unlike when rendering EJS templates
+  return render(request, 'about.html')
