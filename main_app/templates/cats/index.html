@@ -5,15 +5,18 @@
 
 {% for cat in cats %}
   <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ cat.name }}</span>
-      <p>Breed: {{ cat.breed }}</p>
-      <p>Description: {{ cat.description }}</p>
-      {% if cat.age > 0 %}
-        <p>Age: {{ cat.age }}</p>
-      {% else %}
-        <p>Age: Kitten</p>
-      {% endif %}
+      <div class="card-content">
+          <span class="card-title">{{ cat.name }}</span>
+          <p>Breed: {{ cat.breed }}</p>
+          <p>Description: {{ cat.description }}</p>
+          {% if cat.age > 0 %}
+          <p>Age: {{ cat.age }}</p>
+          {% else %}
+          <p>Age: Kitten</p>
+          {% endif %}
+          <!-- <a href="/cats/{{ cat.id }}">View {{ cat.name }} details</a> -->
+          <!-- django gives us a nice url structure for links -->
+          <a href="{% url 'detail' cat.id %}">View {{ cat.name }} details</a>
     </div>
   </div>
 {% endfor %}
