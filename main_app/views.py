@@ -1,13 +1,15 @@
 from django.shortcuts import render
+from .models import Cat
+
 
 # temporary cats for building templates
 # views.py
 # Add this cats list below the imports
-cats = [
-  {'name': 'Lolo', 'breed': 'tabby', 'description': 'furry little demon', 'age': 3},
-  {'name': 'Sachi', 'breed': 'calico', 'description': 'gentle and loving', 'age': 2},
-  {'name': 'Tubs', 'breed': 'ragdoll', 'description': 'little and chunky', 'age': 0},
-]
+# cats = [
+#   {'name': 'Lolo', 'breed': 'tabby', 'description': 'furry little demon', 'age': 3},
+#   {'name': 'Sachi', 'breed': 'calico', 'description': 'gentle and loving', 'age': 2},
+#   {'name': 'Tubs', 'breed': 'ragdoll', 'description': 'little and chunky', 'age': 0},
+# ]
 
 
 # Create your views here.
@@ -28,6 +30,8 @@ def about(request):
 # Add new view
 def cats_index(request):
   # We pass data to a template very much like we did in Express!
+  # gather relations using models
+  cats = Cat.objects.all()
   return render(request, 'cats/index.html', {
     'cats': cats
   })
