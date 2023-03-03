@@ -18,8 +18,9 @@
               <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Cat Collector</a></li>
             </ul>
             <ul class="right">
-              <li><a href="/about">About</a></li>
-              <li><a href="/cats">View All My Cats</a></li>
+              <li><a href="{% url 'about' %}">About</a></li>
+              <li><a href="{% url 'cats_create' %}">Add a Cat</a></li>
+              <li><a href="{% url 'index' %}">View All My Cats</a></li>
             </ul>
           </div>
         </nav>
@@ -34,3 +35,4 @@
     
 </body>
 </html>
+
