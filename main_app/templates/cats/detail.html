@@ -24,6 +24,13 @@
   </div>
   <!-- New Markup Below -->
   <div class="col s6">
+    <form action="{% url 'add_feeding' cat.id %}" method="POST">
+        {% csrf_token %}
+        <!-- Render the inputs -->
+        {{ feeding_form.as_p }}
+        <input type="submit" class="btn" value="Add Feeding">
+    </form>
+    
     <table class="striped">
       <thead>
         <tr><th>Date</th><th>Meal</th></tr>
@@ -40,4 +47,16 @@
   </div>
   <!-- New Markup Above -->
 </div>
+<script>
+  const dateEl = document.getElementById('id_date');
+  // M is Materialize's global variable
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+  const selectEl = document.getElementById('id_meal');
+  M.FormSelect.init(selectEl);
+</script>
 {% endblock %}
