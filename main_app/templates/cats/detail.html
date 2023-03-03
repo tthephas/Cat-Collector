@@ -1,23 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h1>Cat Details</h1>
+<h1>Cat Details</h1>
 
+<div class="row">
+  <div class="col s6">
     <div class="card">
-        <div class="card-content">
-            <span class="card-title">{{ cat.name }}</span>
-            <p>Breed: {{ cat.breed }}</p>
-            <p>Description: {{ cat.description | linebreaks }}</p>
-            {% if cat.age > 0 %}
-            <p>Age: {{ cat.age }}</p>
-            {% else %}
-            <p>Age: Kitten</p>
-            {% endif %}
-        </div>
-        <div class="card-action">
-            <a href="{% url 'cats_update' cat.id %}">Edit</a>
-            <a href="{% url 'cats_delete' cat.id %}">Delete</a>
-          </div>
+      <div class="card-content">
+        <span class="card-title">{{ cat.name }}</span>
+        <p>Breed: {{ cat.breed }}</p>
+        <p>Description: {{ cat.description|linebreaks }}</p>
+        {% if cat.age > 0 %}
+          <p>Age: {{ cat.age }}</p>
+        {% else %}
+          <p>Age: Kitten</p>
+        {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'cats_update' cat.id %}">Edit</a>
+        <a href="{% url 'cats_delete' cat.id %}">Delete</a>
+      </div>
     </div>
-
+  </div>
+  <!-- New Markup Below -->
+  <div class="col s6">
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Meal</th></tr>
+      </thead>
+      <tbody>
+        {% for feeding in cat.feeding_set.all %}
+          <tr>
+            <td>{{feeding.date}}</td>
+            <td>{{feeding.get_meal_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <!-- New Markup Above -->
+</div>
 {% endblock %}
