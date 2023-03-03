@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 
-from .models import Cat
+from .models import Cat, Toy
 
 from .forms import FeedingForm
 
@@ -71,3 +73,35 @@ def add_feeding(request, cat_id):
     new_feeding.save()
   return redirect('detail', cat_id=cat_id)
 
+# toylist
+class ToyList(ListView):
+  model = Toy
+  template_name = 'toys/index.html'
+
+
+# toydetail
+
+class ToyDetail(DetailView):
+  model = Toy
+  template_name = 'toys/detail.html'
+
+# toycreate
+
+class ToyCreate(CreateView):
+  model = Toy
+  fields = ['name', 'color']
+
+  # define inherited method is_valid does
+  def form_valid(self, form):
+    return super().form_valid(form)
+  
+# toyupdate
+
+class ToyUpdate(UpdateView):
+  model = Toy
+  fields = ['name', 'color']
+
+# toydelete
+class ToyDelete(DeleteView):
+  model = Toy
+  success_url = '/toys'
