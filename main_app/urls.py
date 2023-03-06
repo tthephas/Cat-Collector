@@ -14,6 +14,10 @@ urlpatterns = [
     path('cats/<int:pk>/delete/', views.CatDelete.as_view(), name='cats_delete'),
     path('cats/<int:cat_id>/add_feeding/', views.add_feeding, name='add_feeding'),
     path('cats/<int:cat_id>/', views.cats_detail, name='detail'),
+    
+    ## add photo
+    path('cats/<int:cat_id>/add_photo/', views.add_photo, name='add_photo'),
+
     ## add assoc with toys
     path('cats/<int:cat_id>/assoc_toy/<int:toy_id>/', views.assoc_toy, name='assoc_toy'),
     ## add unassoc

@@ -3,9 +3,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-from .models import Cat, Toy
+from .models import Cat, Toy, Photo
 
 from .forms import FeedingForm
+import uuid
+import boto3
 
 
 # temporary cats for building templates
