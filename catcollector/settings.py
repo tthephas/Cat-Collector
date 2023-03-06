@@ -134,3 +134,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/cats/'
+
+# Add this variable to specify where logging out redirects to
+LOGOUT_REDIRECT_URL = '/'
