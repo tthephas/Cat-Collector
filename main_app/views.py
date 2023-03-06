@@ -8,7 +8,12 @@ from .models import Cat, Toy, Photo
 from .forms import FeedingForm
 import uuid
 import boto3
+from django.conf import settings
 
+AWS_ACCESS_KEY = settings.AWS_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY = settings.AWS_SECRET_ACCESS_KEY
+S3_BUCKET = settings.S3_BUCKET
+S3_BASE_URL = settings.S3_BASE_URL
 
 # temporary cats for building templates
 # views.py
@@ -120,3 +125,26 @@ class ToyUpdate(UpdateView):
 class ToyDelete(DeleteView):
   model = Toy
   success_url = '/toys/'
+
+def add_photo(request, cat_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            # bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, S3_BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{S3_BUCKET}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            photo = Photo(url=url, cat_id=cat_id)
+            # Photo.objects.create(url=url, cat_id=cat_id)
+            photo.save()
+        except Exception as error:
+            print('An error occurred uploading file to S3')
+            print(error)
+            return redirect('detail', cat_id=cat_id)
+    return redirect('detail', cat_id=cat_id)
